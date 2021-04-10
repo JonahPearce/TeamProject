@@ -1,7 +1,7 @@
 // Hangman Game
 #include <stdio.h>
 #include <string.h>
-#include "Source.h"
+#include "Hangman.h"
 #include <stdbool.h>
 
 #define MAXINPUT    30
