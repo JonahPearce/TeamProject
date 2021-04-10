@@ -2,6 +2,10 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include "Hangman.h"
+#include "Manager.h"
+
+
 //include statements for module files
 
 int main()
