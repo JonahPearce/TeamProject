@@ -141,15 +141,16 @@
   <ItemGroup>
     <ClCompile Include="FileManager.c" />
     <ClCompile Include="Hangman.c" />
-    <ClCompile Include="Main.c" />
     <ClCompile Include="Manager.c" />
     <ClCompile Include="Menu.c" />
+    <ClCompile Include="ScheduleManager.c" />
     <ClCompile Include="TaskManager.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="Hangman.h" />
     <ClInclude Include="Manager.h" />
+    <ClInclude Include="ScheduleManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
