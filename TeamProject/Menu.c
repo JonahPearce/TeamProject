@@ -4,6 +4,7 @@
 
 #include "Hangman.h"
 #include "Manager.h"
+#include "FileManager.h"
 
 
 //include statements for module files
@@ -33,7 +34,7 @@ int main()
 			//taskManager();
 			break;
 		case 'b':
-			//fileManager();
+			FileManager();
 			break;
 		case 'c':
 			//scheduleManager();

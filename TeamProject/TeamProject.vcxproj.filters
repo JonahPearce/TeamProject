@@ -30,12 +30,18 @@
     <ClCompile Include="TaskManager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileManager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Hangman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

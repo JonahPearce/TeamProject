@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileManager.c" />
     <ClCompile Include="Hangman.c" />
     <ClCompile Include="Main.c" />
     <ClCompile Include="Manager.c" />
@@ -146,6 +147,7 @@
     <ClCompile Include="TaskManager.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="Hangman.h" />
     <ClInclude Include="Manager.h" />
   </ItemGroup>
