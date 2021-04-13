@@ -56,7 +56,7 @@ int taskMenu()
 			displayAll(list);
 			break;
 
-		default:
+		case 'q':
 			printf("Returning to Main Menu...\n");
 			complete = true;
 		}
