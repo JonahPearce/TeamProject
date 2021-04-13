@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #include "ScheduleManager.h"
-#include "FileManager.h";
+#include "FileManager.h"
 
 bool Exit = false;
 char* MenuOutput = "";

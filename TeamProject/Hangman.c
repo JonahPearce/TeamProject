@@ -11,7 +11,7 @@ char words[MAXINPUT][MAXINPUT] = { "software", "allocation", "concert", "lecture
 "restaurant", "hemisphere", "workshop", "climate", "crossing", "economy", "helicoptor", "definition", "standard", "exploration", "performer", "service", "display", "confuse",
 "electronics", "computer", "skilled", "interface", "transparent", "conscience", "coverage", "technique", "calculation", "temporary", "executive", "accountant", "athlete" };
 
-int main() {
+int gameModule() {
     // Initialization
     letterData.incorrectLetters = 0;
 
