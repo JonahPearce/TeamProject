@@ -4,7 +4,8 @@
 
 #include "Hangman.h"
 #include "Manager.h"
-
+#include "FileManager.h"
+#include "ScheduleManager.h"
 
 //include statements for module files
 
@@ -33,10 +34,10 @@ int main()
 			//taskManager();
 			break;
 		case 'b':
-			//fileManager();
+			FileManager();
 			break;
 		case 'c':
-			//scheduleManager();
+			ScheduleManager();
 			break;
 		case 'd':
 			//gameModule();
