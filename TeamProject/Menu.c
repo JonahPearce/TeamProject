@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #include "Hangman.h"
-#include "Manager.h"
+#include "TaskManager.h"
 #include "FileManager.h"
 #include "ScheduleManager.h"
 

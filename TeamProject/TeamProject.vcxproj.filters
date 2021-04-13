@@ -18,9 +18,6 @@
     <ClCompile Include="Hangman.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Manager.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Menu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -35,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Manager.h">
+    <ClInclude Include="TaskManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Hangman.h">
