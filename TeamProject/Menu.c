@@ -31,7 +31,7 @@ int main()
 		switch (selection)
 		{
 		case 'a':
-			//taskManager();
+			taskMenu();
 			break;
 		case 'b':
 			FileManager();
@@ -40,7 +40,7 @@ int main()
 			ScheduleManager();
 			break;
 		case 'd':
-			//gameModule();
+			gameModule();
 			break;
 		case 'q':
 			printf("Thank you for using the Management Suite, goodbye...\n");

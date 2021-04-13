@@ -8,7 +8,7 @@
 #define MAXATTEMPTS 6
 
 
-int main() {
+int gameModule() {
     // Initialization
     letterData.incorrectLetters = 0;
 

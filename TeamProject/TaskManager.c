@@ -5,7 +5,7 @@
 
 
 
-int main()
+int taskMenu()
 {
 	int i;//loop counter variable
 	//Initialize an array of structs to hold the task list
