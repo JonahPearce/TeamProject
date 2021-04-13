@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <conio.h>
@@ -15,8 +17,8 @@ struct dirent* FolderPointer;
 struct Address PreviousAddress[MAX_ADDRESS_HISTORY];
 
 int AddressLength;
-char * FolderAddress;
-char * CmdFeedback;
+char* FolderAddress;
+char* CmdFeedback;
 
 bool Exit;
 bool FileDetails = false;
@@ -30,7 +32,7 @@ void FileManager() {
 	AddressLength = 0;
 
 	DIR* Folder = opendir(FolderAddress);;
-	
+
 	while (Exit == false) {
 		Folder = opendir(FolderAddress);
 
@@ -184,7 +186,8 @@ void DeleteFolder() {
 void ExitFolder() {
 	if (AddressLength < 1) {
 		CmdFeedback = "You cannot exit beyond this folder.";
-	} else {
+	}
+	else {
 		AddressLength -= 1;
 		FolderAddress = PreviousAddress[AddressLength].FolderName;
 		CmdFeedback = "Successfully went back.";
@@ -192,7 +195,8 @@ void ExitFolder() {
 }
 
 void SearchForFolder() {
-	char* SearchFolderAddress = FolderAddress;
+	char SearchFolderAddress[MAX_STRING_SIZE];
+	strcpy(SearchFolderAddress, FolderAddress);
 	CmdFeedback = "Search Results:";
 	SearchAlgorithm(InputName(), SearchFolderAddress); // Runs my search algorithm function
 }
@@ -206,7 +210,8 @@ void CreateText() {
 	strcat(File, ".txt");
 	if (FilePointer = fopen(File, "a")) {
 		CmdFeedback = "Text File Created";
-	} else {
+	}
+	else {
 		CmdFeedback = "Failed to create Text File.";
 	}
 	fclose(FilePointer);
@@ -221,7 +226,8 @@ void DeleteText() {
 	int Test = remove(File);
 	if (!Test) {
 		CmdFeedback = "Text File Deleted";
-	} else {
+	}
+	else {
 		CmdFeedback = "Failed to delete Text File.";
 	}
 }
@@ -295,7 +301,7 @@ char* InputName() {
 	return Input;
 }
 
-char* MenuInput(char * AcceptableInput) { // Proper Menu Input
+char* MenuInput(char* AcceptableInput) { // Proper Menu Input
 	char Letter;
 	bool Acceptable = false;
 	while (!Acceptable) {
@@ -315,7 +321,7 @@ char* MenuInput(char * AcceptableInput) { // Proper Menu Input
 void FixInput(void) {
 	bool Fixed = false;
 	while (!Fixed) {
-		if (getchar() == '\n') 
+		if (getchar() == '\n')
 			Fixed = true;
 	}
 }
@@ -330,11 +336,12 @@ void UpdateFolderAddress(char* String1, char* String2) {
 	strcat(FolderAddress, String2);
 }
 
-void SearchAlgorithm(char* Search, char* SearchFolderAddress) {
-	struct dirent* SearchFolderPointer= NULL;
+void SearchAlgorithm(char* Search, char SearchFolderAddress[]) {
+	struct dirent* SearchFolderPointer = NULL;
 	DIR* SearchFolder = opendir(SearchFolderAddress);
 	if (!SearchFolder) {
-	} else {
+	}
+	else {
 		while ((SearchFolderPointer = readdir(SearchFolder)) != NULL) {
 			char* FileName = SearchFolderPointer->d_name;
 			if ((strcmp(FileName, Search) == 0)) {
@@ -348,17 +355,16 @@ void SearchAlgorithm(char* Search, char* SearchFolderAddress) {
 			int CheckIfFolder = (int)SearchFolderPointer->d_type;
 			if (CheckIfFolder == FOLDER_ID_NUMBER) {
 				if (strcmp(FileName, ".") != 0 && strcmp(FileName, "..") != 0) {
-					char* NewSearchFolderAddress = (char*)malloc((1 + strlen(SearchFolderAddress) + strlen(FileName) + 1));
+					char NewSearchFolderAddress[MAX_SENTENCE_SIZE];
 					strcpy(NewSearchFolderAddress, SearchFolderAddress);
 					strcat(NewSearchFolderAddress, FileName);
 					strcat(NewSearchFolderAddress, "/");
 					printf("%s\n", NewSearchFolderAddress);
 					SearchAlgorithm(Search, NewSearchFolderAddress);
-					free(NewSearchFolderAddress);
 				}
 			}
 		}
-		closedir(SearchFolder);
+		//closedir(SearchFolder);
 	}
-	free(SearchFolderPointer);
+	//free(SearchFolderPointer);
 }

@@ -32,4 +32,4 @@ char* MenuInput(char*);
 void FixInput();
 void clrscr();
 void UpdateFolderAddress(char*, char*);
-void SearchAlgorithm(char*, char*);
+void SearchAlgorithm(char*, char[]);
