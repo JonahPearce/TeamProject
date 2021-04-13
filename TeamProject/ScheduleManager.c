@@ -8,6 +8,9 @@
 bool Exit = false;
 char* MenuOutput = "";
 
+const char* MonthNames[12] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+const int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
 void ScheduleManager() {
     SCHEDULE Scheduler = (SCHEDULE)malloc(sizeof(Schedule)+1);
     Scheduler->CurrentDate = GetCurrentDate();

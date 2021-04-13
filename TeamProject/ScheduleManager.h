@@ -29,9 +29,6 @@ typedef struct Schedule {
 	Date CurrentDate;
 }Schedule,*SCHEDULE;
 
-const char * MonthNames[12] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-const int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-
 void ScheduleManager();
 
 void DisplayMenu(SCHEDULE);
