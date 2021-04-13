@@ -10,6 +10,10 @@ void displayLoss();
 int compareAns();
 void showGuesses();
 
+//Declare Mock Functions For Testing 
+char mock_getLetter(char* TESTguessed_Letter);
+
+
 
 // Data for a keyword and guesses 
 struct data {
@@ -19,10 +23,10 @@ struct data {
 	int incorrectLetters;
 };
 
+struct keyword {
+	char wordToGuess[MAXINPUT];
+};
+
 struct data letterData; // Create the structure for the guesses 
+struct keyword answerWord; // Create the structure for the keyword to be stored
 
-
-// All Potential Keywords (from a random word generator) 
-char words[MAXINPUT][MAXINPUT] = { "software", "allocation", "concert", "lecture", "exotic", "formation", "directory", "telephone", "sequence", "classroom", "example", "realize", "cinema",
-"restaurant", "hemisphere", "workshop", "climate", "crossing", "economy", "helicoptor", "definition", "standard", "exploration", "performer", "service", "display", "confuse",
-"electronics", "computer", "skilled", "interface", "transparent", "conscience", "coverage", "technique", "calculation", "temporary", "executive", "accountant", "athlete"};
