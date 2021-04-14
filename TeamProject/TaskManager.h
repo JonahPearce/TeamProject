@@ -17,3 +17,5 @@ void displayAll(struct TaskManager* Item);
 void addNewUpdate(struct TaskManager* list);
 
 void removeFromList(struct TaskManager* list);
+
+void searchTask(struct TaskManager* list);

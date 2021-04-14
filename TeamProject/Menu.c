@@ -26,8 +26,8 @@ int main()
 		printf("To play the Game Module - (d)\n");
 		printf("Your selection: ");
 
-		scanf("%c", &selection);
-
+		selection = getchar();
+		
 		switch (selection)
 		{
 		case 'a':

@@ -32,10 +32,16 @@ int taskMenu()
 		printf("To delete an existing task - (b)\n");
 		printf("To display current task list - (c)\n");
 		printf("To print all tasks in list - (d)\n");
+		printf("To search for a task - (e)\n");
 		printf("Your choice:");
-	
-		scanf("%c",&selection);
+		
+		selection = getchar();
 
+		//Used to avoid printing menu twice
+		if (selection == '\n')
+		{
+			selection = getchar();
+		}
 
 		//Calls various functions depending on the input
 		switch (selection)
@@ -56,10 +62,20 @@ int taskMenu()
 			displayAll(list);
 			break;
 
+		case 'e':
+			searchTask(list);
+
 		case 'q':
 			printf("Returning to Main Menu...\n");
 			complete = true;
+		
+		default:
+			printf("Invalid input, please try again\n");
+		
 		}
+
+		
+
 	
 	}
 
@@ -135,14 +151,26 @@ void addNewUpdate(struct TaskManager* list)
 	char active = ' ';
 
 	//input statements for ID, whether it's active, and the description
-	printf("Enter where in the queue you would like the task to be: ");
+	printf("What is the taskID of the task you would like to add/update?:");
 	scanf_s("%d", &IDNum);
 
-	printf("Enter the new task's description: ");
+	printf("\n");
+
+	printf("Enter the new task's description:");
 	fgets(description, 100, stdin);
 
+	printf("\n");
+
 	printf("Is this task active? (Enter 'y' for yes or 'n' for no): ");
-	scanf_s("%c", &active);
+	
+	active = getchar();
+
+	if (active == '\n')
+	{
+		active = getchar();
+	}
+
+	printf("\n");
 
 	//used to determine if the active bool should be true or false. If it's true,
 	//then the task will be considered active, if false, it will be considered inactive
@@ -154,9 +182,6 @@ void addNewUpdate(struct TaskManager* list)
 		list[IDNum].active = true;
 	case 'n':
 		list[IDNum].active = false;
-	default:
-		printf("That input is not valid");
-		break;
 	}
 
 	list[IDNum].description = description; //Ensure description from this function reaches main list
@@ -178,4 +203,7 @@ void removeFromList(struct TaskManager* list)
 	printf("Task %d deleted.\n", IDNum);
 }
 
-
+void searchTask(struct TaskManager* list)
+{
+	printf("This function is still being implemented");
+}
