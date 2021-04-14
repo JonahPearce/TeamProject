@@ -18,6 +18,7 @@ char words[MAXINPUT][MAXINPUT] = { "identical", "chocolate", "beautiful", "happi
 int gameModule() {
     // Initialization
     letterData.incorrectLetters = 0;
+    memset(&letterData, 0, sizeof(letterData));
     fflush(stdin);
     fflush(stdout); 
     getchar(); 
