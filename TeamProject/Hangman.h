@@ -11,7 +11,7 @@ int compareAns();
 void showGuesses();
 
 //Declare Mock Functions For Testing 
-char mock_getLetter(char* TESTguessed_Letter);
+// char mock_getLetter(char* TESTguessed_Letter);
 
 
 
@@ -29,4 +29,3 @@ struct keyword {
 
 struct data letterData; // Create the structure for the guesses 
 struct keyword answerWord; // Create the structure for the keyword to be stored
-

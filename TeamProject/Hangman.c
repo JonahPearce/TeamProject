@@ -1,10 +1,14 @@
 // Hangman Game
 #include <stdio.h>
 #include <string.h>
-#include "Hangman.h"
 #include <stdbool.h>
 
+#include "Hangman.h"
+
+
 #define MAXATTEMPTS 6
+
+#pragma warning(disable:4996) // Remove warning with strncpy
 
 // All Potential Keywords (from a random word generator) 
 char words[MAXINPUT][MAXINPUT] = { "software", "allocation", "concert", "lecture", "exotic", "formation", "directory", "telephone", "sequence", "classroom", "example", "realize", "cinema",
@@ -61,12 +65,12 @@ int getAnswer() {
     srand(time(NULL));
 
     int randomNumber = rand() % ((40 + 1) - 1) + 1;
-   
+
     strncpy(letterData.letters,
         words[randomNumber], strlen(words[randomNumber]));
 
     // Store the keyword in a structure for end reveal 
-    strncpy(answerWord.wordToGuess, 
+    strncpy(answerWord.wordToGuess,
         words[randomNumber], strlen(words[randomNumber]));
 
     // Initialize correctLetters
@@ -142,12 +146,14 @@ void displayWin() {
     // Display winning statement 
     puts("You win!");
     // Display the keyword 
-    printf("\nThe word was %s.\n", answerWord.wordToGuess);
+    printf("\nThe word was %s.\n\n", answerWord.wordToGuess);
+    main();
 }
 
 void displayLoss() {
     // Display losing statement 
     puts("You lose!");
     // Display the keyword 
-    printf("\nThe word was %s.\n", answerWord.wordToGuess);
+    printf("\nThe word was %s.\n\n", answerWord.wordToGuess);
+    main();
 }
