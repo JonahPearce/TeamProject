@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
@@ -68,7 +66,15 @@ void DisplayMenu(SCHEDULE Scheduler) {
         for (int MONTH = 0; MONTH < (MAX_MONTHS); MONTH++) {
             for (int DAY = 0; DAY < (MAX_DAYS); DAY++) {
                 if (strcmp("", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName) != 0) {
-                    printf("%s: %s %d, %d\n", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY + 1, Scheduler->Year[YEAR].YearID);
+                    if (Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time == 1) {
+                        printf("%s: Morning, %s %d, %d\n", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY + 1, Scheduler->Year[YEAR].YearID);
+                    }
+                    else if (Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time == 2) {
+                        printf("%s: Afternoon, %s %d, %d\n", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY + 1, Scheduler->Year[YEAR].YearID);
+                    }
+                    else if (Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time == 3) {
+                        printf("%s: Evening, %s %d, %d\n", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY + 1, Scheduler->Year[YEAR].YearID);
+                    }
                 }
             }
         }
@@ -179,10 +185,10 @@ void EditEvent(SCHEDULE Scheduler) {
                     while (ExitEditor == false) {
 
                         printf("\na) Edit Year");
-                        printf("\na) Edit Month");
-                        printf("\na) Edit Day");
-                        printf("\na) Edit Time");
-                        printf("\na) Exit Editor\n\n");
+                        printf("\nb) Edit Month");
+                        printf("\nc) Edit Day");
+                        printf("\nd) Edit Time");
+                        printf("\ne) Exit Editor\n\n");
 
                         char Input = MenuInput("abcde");
                         switch (Input) {
@@ -200,8 +206,8 @@ void EditEvent(SCHEDULE Scheduler) {
                             break;
                         case 'e':
                             strcpy(Scheduler->Year[Year].Month[Month].Day[Day].EventName, Name);
-                            Scheduler->Year[Year].Month[Month].Day[Day].Time = Name;
-                            Exit = true;
+                            Scheduler->Year[Year].Month[Month].Day[Day].Time = Time;
+                            ExitEditor = true;
                             break;
                         }
                     }

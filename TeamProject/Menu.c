@@ -26,7 +26,7 @@ int main()
 		printf("To play the Game Module - (d)\n");
 		printf("Your selection: ");
 
-		selection = getchar();
+		selection = MenuInput("abcdq");
 		
 		switch (selection)
 		{

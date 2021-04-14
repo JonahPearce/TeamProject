@@ -15,8 +15,9 @@ struct dirent* FolderPointer;
 struct Address PreviousAddress[MAX_ADDRESS_HISTORY];
 
 int AddressLength;
-char* FolderAddress;
-char* CmdFeedback;
+
+char FolderAddress[MAX_STRING_SIZE];
+char CmdFeedback[MAX_STRING_SIZE];
 
 bool Exit;
 bool FileDetails = false;
@@ -24,8 +25,8 @@ bool FileDetails = false;
 // Manager Functions
 
 void FileManager() {
-	FolderAddress = "/";
-	CmdFeedback = "Welcome to the File Manager. Please Select a Command.";
+	strcpy(FolderAddress, "/");
+	strcpy(CmdFeedback, "Welcome to the File Manager. Please Select a Command.");
 	Exit = false;
 	AddressLength = 0;
 
@@ -37,7 +38,7 @@ void FileManager() {
 		if (!Folder) { // Reverts to the previous address if the new one is invalid
 			ExitFolder();
 			Folder = opendir(FolderAddress);
-			CmdFeedback = "That was an invalid Entry. Please try again.";
+			strcpy(CmdFeedback, "That was an invalid Entry. Please try again.");
 		}
 
 		clrscr();
@@ -98,7 +99,7 @@ void ManagerDisplay(DIR* Folder) {
 
 void ManagerCommands() {
 
-	CmdFeedback = "";
+	strcpy(CmdFeedback, "");
 	char Input = MenuInput("abcdefghij");
 
 	switch (Input) {
@@ -145,12 +146,11 @@ void ManagerCommands() {
 void OpenFolder() {
 	char* Input = InputName();
 	if (AddressLength < 25) { // Stores the last file they were in a long array incase of a invalid input or the user wants to backtrack.
-		PreviousAddress[AddressLength].FolderName = FolderAddress;
+		strcpy(PreviousAddress[AddressLength].FolderName, FolderAddress);
 		AddressLength += 1;
 	}
-
-	UpdateFolderAddress(FolderAddress, Input);
-	UpdateFolderAddress(FolderAddress, "/");
+	strcat(FolderAddress, Input);
+	strcat(FolderAddress, "/");
 }
 
 void CreateFolder() {
@@ -161,9 +161,9 @@ void CreateFolder() {
 	strcat(Folder, Input);
 	Check = mkdir(Folder, 0777);
 	if (!Check)
-		CmdFeedback = "Folder Created";
+		strcpy(CmdFeedback, "Folder Created");
 	else {
-		CmdFeedback = "Failed to create Folder";
+		strcpy(CmdFeedback, "Failed to create Folder");
 	}
 }
 
@@ -175,27 +175,27 @@ void DeleteFolder() {
 	strcat(Folder, Input);
 	Check = rmdir(Folder, 0777);
 	if (!Check)
-		CmdFeedback = "Folder Deleted";
+		strcpy(CmdFeedback, "Folder Deleted");
 	else {
-		CmdFeedback = "Failed to delete Folder";
+		strcpy(CmdFeedback, "Failed to delete Folder");
 	}
 }
 
 void ExitFolder() {
 	if (AddressLength < 1) {
-		CmdFeedback = "You cannot exit beyond this folder.";
+		strcpy(CmdFeedback, "You cannot exit beyond this folder.");
 	}
 	else {
 		AddressLength -= 1;
-		FolderAddress = PreviousAddress[AddressLength].FolderName;
-		CmdFeedback = "Successfully went back.";
+		strcpy(FolderAddress, PreviousAddress[AddressLength].FolderName);
+		strcpy(CmdFeedback, "Successfully went back.");
 	}
 }
 
 void SearchForFolder() {
 	char SearchFolderAddress[MAX_STRING_SIZE];
 	strcpy(SearchFolderAddress, FolderAddress);
-	CmdFeedback = "Search Results:";
+	strcpy(CmdFeedback, "Search Results:");
 	SearchAlgorithm(InputName(), SearchFolderAddress); // Runs my search algorithm function
 }
 
@@ -207,10 +207,10 @@ void CreateText() {
 	strcat(File, Input);
 	strcat(File, ".txt");
 	if (FilePointer = fopen(File, "a")) {
-		CmdFeedback = "Text File Created";
+		strcpy(CmdFeedback, "Text File Created");
 	}
 	else {
-		CmdFeedback = "Failed to create Text File.";
+		strcpy(CmdFeedback, "Failed to create Text File.");
 	}
 	fclose(FilePointer);
 }
@@ -223,10 +223,10 @@ void DeleteText() {
 	strcat(File, ".txt");
 	int Test = remove(File);
 	if (!Test) {
-		CmdFeedback = "Text File Deleted";
+		strcpy(CmdFeedback, "Text File Deleted");
 	}
 	else {
-		CmdFeedback = "Failed to delete Text File.";
+		strcpy(CmdFeedback, "Failed to delete Text File.");
 	}
 }
 
@@ -257,7 +257,7 @@ void TextFileLoop() {
 		}
 	}
 	else {
-		CmdFeedback = "Failed to Open Text File";
+		strcpy(CmdFeedback, "Failed to Open Text File");
 	}
 }
 
@@ -289,7 +289,7 @@ void TextFileEditText(char* File) {
 	fgets(Input, sizeof(Input), stdin);
 	fprintf(FilePointer, "%s", Input);
 	fclose(FilePointer);
-	CmdFeedback = "Text written to Document";
+	strcpy(CmdFeedback, "Text written to Document");
 }
 
 char* InputName() {
@@ -328,12 +328,6 @@ void clrscr() {
 	system("@cls||clear");
 }
 
-void UpdateFolderAddress(char* String1, char* String2) {
-	FolderAddress = (char*)malloc(1 + strlen(String1) + strlen(String2));
-	strcpy(FolderAddress, String1);
-	strcat(FolderAddress, String2);
-}
-
 void SearchAlgorithm(char* Search, char SearchFolderAddress[]) {
 	struct dirent* SearchFolderPointer = NULL;
 	DIR* SearchFolder = opendir(SearchFolderAddress);
@@ -344,7 +338,6 @@ void SearchAlgorithm(char* Search, char SearchFolderAddress[]) {
 			char* FileName = SearchFolderPointer->d_name;
 			if ((strcmp(FileName, Search) == 0)) {
 				char* Temp = CmdFeedback;
-				CmdFeedback = (char*)malloc(1 + strlen(Temp) + strlen(FileName) + strlen("  Match:"));
 				strcpy(CmdFeedback, Temp);
 				strcat(CmdFeedback, "  Match:");
 				strcat(CmdFeedback, SearchFolderAddress);
@@ -362,7 +355,7 @@ void SearchAlgorithm(char* Search, char SearchFolderAddress[]) {
 				}
 			}
 		}
-		//closedir(SearchFolder);
+		closedir(SearchFolder);
 	}
-	//free(SearchFolderPointer);
+	free(SearchFolderPointer);
 }
