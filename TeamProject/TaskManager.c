@@ -27,6 +27,8 @@ int taskMenu()
 		printf("To print all tasks in list - (d)\n");
 		printf("To intialize list - (e)\n");
 		printf("To search for a keyword in the tasks - (f)\n");
+		printf("To save your current Task List - (g)\n");
+		printf("To load an existing Task List - (h)\n");
 		printf("Your choice:");
 
 		selection = getchar();
@@ -195,6 +197,13 @@ int taskMenu()
 
 			}
 
+			break;
+		case'g':
+			printf("Still implementing, please come back later\n");
+			break;
+
+		case'h':
+			printf("Still implementing, please come back later\n");
 			break;
 
 		case 'q':
