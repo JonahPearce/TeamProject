@@ -5,29 +5,29 @@
 
 typedef struct Day {
 	int Time;
-	char * EventName;
-}Day,*DAY;
+	char EventName[MAX_INPUT];
+}Day;
 
 typedef struct Month {
 	Day Day[MAX_DAYS];
-}Month,*MONTH;
+}Month;
 
 typedef struct Year {
 	Month Month[MAX_MONTHS];
 	int YearID;
-}Year,*YEAR;
+}Year;
 
 typedef struct Date {
 	int Time;
 	int Day;
 	int Month;
 	int Year;
-}Date,*DATE;
+}Date;
 
 typedef struct Schedule {
 	Year Year[MAX_YEARS];
 	Date CurrentDate;
-}Schedule,*SCHEDULE;
+}Schedule, * SCHEDULE;
 
 void ScheduleManager();
 

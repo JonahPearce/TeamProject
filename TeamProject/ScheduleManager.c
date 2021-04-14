@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <time.h>
 #include <stdbool.h>
@@ -12,20 +14,18 @@ const char* MonthNames[12] = { "January", "February", "March", "April", "May", "
 const int MonthDays[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 
 void ScheduleManager() {
-    SCHEDULE Scheduler = (SCHEDULE)malloc(sizeof(Schedule)+1);
+    SCHEDULE Scheduler = (SCHEDULE)malloc(sizeof(Schedule) + 1);
     Scheduler->CurrentDate = GetCurrentDate();
-    
+
     for (int YEAR = 0; YEAR < (MAX_YEARS); YEAR++) {
         Scheduler->Year[YEAR].YearID = Scheduler->CurrentDate.Year + YEAR;
         for (int MONTH = 0; MONTH < (MAX_MONTHS); MONTH++) {
             for (int DAY = 0; DAY < (MAX_DAYS); DAY++) {
                 Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time = 0;
-                Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName = "";
-
+                strcpy(Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, "");
             }
         }
     }
-
     while (Exit == false) {
 
         system("@cls||clear");
@@ -62,13 +62,13 @@ void DisplayMenu(SCHEDULE Scheduler) {
     printf("c) Edit an Event\n");
     printf("d) Exit\n");
     printf("###############################\n");
-    printf("CurrentDate: %s %d, %d\n", MonthNames[Scheduler->CurrentDate.Month-1], Scheduler->CurrentDate.Day, Scheduler->CurrentDate.Year);
+    printf("CurrentDate: %s %d, %d\n", MonthNames[Scheduler->CurrentDate.Month - 1], Scheduler->CurrentDate.Day, Scheduler->CurrentDate.Year);
     printf("###############################\n");
     for (int YEAR = 0; YEAR < (MAX_YEARS); YEAR++) {
         for (int MONTH = 0; MONTH < (MAX_MONTHS); MONTH++) {
             for (int DAY = 0; DAY < (MAX_DAYS); DAY++) {
                 if (strcmp("", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName) != 0) {
-                    printf("%s: %s %d, %d", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY+1, Scheduler->Year[YEAR].YearID);
+                    printf("%s: %s %d, %d\n", Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, MonthNames[MONTH], DAY + 1, Scheduler->Year[YEAR].YearID);
                 }
             }
         }
@@ -84,10 +84,7 @@ void AddEvent(SCHEDULE Scheduler) {
     MONTH = AddMonth(Scheduler);
     DAY = AddDay(Scheduler, MONTH);
     TIME = AddTime(Scheduler);
-    char * Input = ValidInput("\nPlease enter a name for the Event: ");
-    //memcpy(Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, Input, strlen(Input)+1);
-
-    //Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName = (char*)malloc(1+strlen(Input));
+    char* Input = ValidInput("\nPlease enter a name for the Event: ");
     strcpy(Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, Input);
     Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time = TIME;
     MenuOutput = "Created Event!";
@@ -102,7 +99,7 @@ int AddYear(SCHEDULE Scheduler) {
             Valid = true;
         }
     }
-    return YEAR;
+    return YEAR - Scheduler->CurrentDate.Year;
 }
 
 int AddMonth(SCHEDULE Scheduler) {
@@ -153,7 +150,7 @@ void DeleteEvent(SCHEDULE Scheduler) {
         for (int MONTH = 0; MONTH < (MAX_MONTHS); MONTH++) {
             for (int DAY = 0; DAY < (MAX_DAYS); DAY++) {
                 if (strcmp(Delete, Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName) == 0) {
-                    Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName = "";
+                    strcpy(Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, "");
                     Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time = 0;
                     MenuOutput = "Deleted an Event!";
                 }
@@ -176,7 +173,7 @@ void EditEvent(SCHEDULE Scheduler) {
                     int Time = Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time;
                     char Name[MAX_INPUT];
                     strcpy(Name, Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName);
-                    Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName = "";
+                    strcpy(Scheduler->Year[YEAR].Month[MONTH].Day[DAY].EventName, "");
                     Scheduler->Year[YEAR].Month[MONTH].Day[DAY].Time = 0;
                     bool ExitEditor = false;
                     while (ExitEditor == false) {
@@ -202,7 +199,6 @@ void EditEvent(SCHEDULE Scheduler) {
                             Time = AddTime(Scheduler);
                             break;
                         case 'e':
-                            Scheduler->Year[Year].Month[Month].Day[Day].EventName = (char*)malloc(1 + strlen(Name));
                             strcpy(Scheduler->Year[Year].Month[Month].Day[Day].EventName, Name);
                             Scheduler->Year[Year].Month[Month].Day[Day].Time = Name;
                             Exit = true;
@@ -237,8 +233,8 @@ Date GetCurrentDate() {
     return CurrentDate;
 }
 
-char * ValidInput(char* Text) {
-    char Input[MAX_INPUT];
+char* ValidInput(char* Text) {
+    static char Input[MAX_INPUT];
     printf("\n%s", Text);
     gets(Input);
     return Input;
