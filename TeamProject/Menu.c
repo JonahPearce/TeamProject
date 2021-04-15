@@ -34,7 +34,7 @@ int main()
 			taskMenu();
 			break;
 		case 'b':
-			FileManager();
+			FileManager(false);
 			break;
 		case 'c':
 			ScheduleManager();

@@ -8,7 +8,7 @@
 #include <errno.h>
 
 #include "FileManager.h"
-
+#include "ScheduleManager.h"
 
 struct dirent* FolderPointer;
 
@@ -17,18 +17,22 @@ struct Address PreviousAddress[MAX_ADDRESS_HISTORY];
 int AddressLength;
 
 char FolderAddress[MAX_STRING_SIZE];
+char IntegrationFolderAddress[MAX_STRING_SIZE];
 char CmdFeedback[MAX_STRING_SIZE];
 
 bool Exit;
 bool FileDetails = false;
+bool Integration;
 
 // Manager Functions
 
-void FileManager() {
+void FileManager(bool IsIntegration) {
 	strcpy(FolderAddress, "/");
 	strcpy(CmdFeedback, "Welcome to the File Manager. Please Select a Command.");
 	Exit = false;
 	AddressLength = 0;
+
+	Integration = IsIntegration;
 
 	DIR* Folder = opendir(FolderAddress);;
 
@@ -67,6 +71,11 @@ void ManagerDisplay(DIR* Folder) {
 		printf("i) Enable Extra File Details\n");
 	}
 	printf("j) Exit File Manager\n");
+
+	if (Integration == true) {
+		printf("\nk) Use Current folder for Module Data\n\n");
+	}
+
 	printf("###############################\n");
 	printf("Folder: %s\n", FolderAddress);
 	printf("###############################\n");
@@ -100,7 +109,7 @@ void ManagerDisplay(DIR* Folder) {
 void ManagerCommands() {
 
 	strcpy(CmdFeedback, "");
-	char Input = MenuInput("abcdefghij");
+	char Input = MenuInput("abcdefghijk");
 
 	switch (Input) {
 	case 'a':
@@ -137,6 +146,12 @@ void ManagerCommands() {
 		break;
 	case 'j':
 		Exit = true;
+		break;
+	case 'k':
+		if (Integration == true) {
+			strcpy(IntegrationFolderAddress, FolderAddress);
+			Exit = true;
+		}
 		break;
 	}
 }
@@ -358,4 +373,57 @@ void SearchAlgorithm(char* Search, char SearchFolderAddress[]) {
 		closedir(SearchFolder);
 	}
 	free(SearchFolderPointer);
+}
+
+
+void ScheduleManagerSave(SCHEDULE SaveData) {
+	FILE* FilePointer;
+	FileManager(true);
+
+	printf("\nSaving Schedule Manager Data: \n");
+
+	printf("%d", SaveData->CurrentDate.Year);
+	char* Input = InputName();
+	//printf("Past it");
+	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
+	strcpy(File, IntegrationFolderAddress);
+	strcat(File, Input);
+	strcat(File, ".txt");
+	//FixInput();
+
+	if ((FilePointer = fopen(File, "wb")) != NULL)
+	{
+		printf("Write It ");
+		for (int i = 0; i < MAX_YEARS; i++) {
+			Year Temp = SaveData->Year[i];
+			fwrite(&Temp, sizeof(Year), 1, FilePointer);
+		}
+		fclose(FilePointer);
+	} else {
+		printf("Failed");
+	}
+	
+}
+
+void ScheduleManagerLoad(SCHEDULE Scheduler) {
+	FILE* FilePointer;
+	FileManager(true);
+	printf("\nPreparing to open file Schedule Manager Data: \n");
+	char* Input = InputName();
+	
+	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
+	strcpy(File, IntegrationFolderAddress);
+	strcat(File, Input);
+	strcat(File, ".txt");
+
+	if ((FilePointer = fopen(File, "rb")) != NULL) {
+		for (int i = 0; i < MAX_YEARS; i++) {
+			Year Temp;
+			fread(&Temp, sizeof(Year), 1, FilePointer);
+			Scheduler->Year[i] = Temp;
+		}
+		fclose(FilePointer);
+	} else {
+		printf("Failed");
+	}
 }

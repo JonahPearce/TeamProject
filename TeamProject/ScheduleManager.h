@@ -42,3 +42,6 @@ void EditEvent(SCHEDULE);
 
 Date GetCurrentDate();
 char* ValidInput(char*);
+
+//void ScheduleManagerSave(SCHEDULE);
+//SCHEDULE ScheduleManagerLoad();

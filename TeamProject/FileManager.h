@@ -11,7 +11,7 @@ struct Address {
 	char FolderName[MAX_STRING_SIZE];
 };
 
-void FileManager();
+void FileManager(bool);
 void ManagerDisplay(DIR*);
 void ManagerCommands();
 

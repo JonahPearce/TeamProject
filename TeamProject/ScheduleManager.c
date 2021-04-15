@@ -5,7 +5,7 @@
 #include "ScheduleManager.h"
 #include "FileManager.h"
 
-bool Exit = false;
+bool ExitSM = false;
 char* MenuOutput = "";
 
 const char* MonthNames[12] = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
@@ -24,13 +24,15 @@ void ScheduleManager() {
             }
         }
     }
-    while (Exit == false) {
+    SCHEDULE Temp;
+
+    while (ExitSM == false) {
 
         system("@cls||clear");
         DisplayMenu(Scheduler);
 
         MenuOutput = "";
-        char Input = MenuInput("abcd");
+        char Input = MenuInput("abcdef");
 
         switch (Input) {
         case 'a':
@@ -43,7 +45,13 @@ void ScheduleManager() {
             EditEvent(Scheduler);
             break;
         case 'd':
-            Exit = true;
+            ScheduleManagerSave(Scheduler);
+            break;
+        case 'e':
+            ScheduleManagerLoad(Scheduler);
+            break;
+        case 'f':
+            ExitSM = true;
             break;
         }
     }
@@ -58,7 +66,9 @@ void DisplayMenu(SCHEDULE Scheduler) {
     printf("a) Add a new Event\n");
     printf("b) Delete an Event\n");
     printf("c) Edit an Event\n");
-    printf("d) Exit\n");
+    printf("d) Save Current Data to the File Manager\n");
+    printf("e) Load Data from the File Manager\n");
+    printf("f) Exit\n");
     printf("###############################\n");
     printf("CurrentDate: %s %d, %d\n", MonthNames[Scheduler->CurrentDate.Month - 1], Scheduler->CurrentDate.Day, Scheduler->CurrentDate.Year);
     printf("###############################\n");
