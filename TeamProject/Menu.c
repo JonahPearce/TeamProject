@@ -45,6 +45,7 @@ int main()
 		case 'q':
 			printf("Thank you for using the Management Suite, goodbye...\n");
 			complete = true;
+			break;
 		default:
 			printf("Invalid input, please select a different option \n");
 			scanf("%c", &selection);
