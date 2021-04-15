@@ -21,20 +21,17 @@
     <ClCompile Include="Menu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TaskManager.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FileManager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ScheduleManager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TaskManager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="TaskManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Hangman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -42,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScheduleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

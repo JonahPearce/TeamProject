@@ -11,13 +11,17 @@
 #pragma warning(disable:4996) // Remove warning with strncpy
 
 // All Potential Keywords (from a random word generator) 
-char words[MAXINPUT][MAXINPUT] = { "software", "allocation", "concert", "lecture", "exotic", "formation", "directory", "telephone", "sequence", "classroom", "example", "realize", "cinema",
-"restaurant", "hemisphere", "workshop", "climate", "crossing", "economy", "helicoptor", "definition", "standard", "exploration", "performer", "service", "display", "confuse",
-"electronics", "computer", "skilled", "interface", "transparent", "conscience", "coverage", "technique", "calculation", "temporary", "executive", "accountant", "athlete" };
+char words[MAXINPUT][MAXINPUT] = { "identical", "chocolate", "beautiful", "happiness", "challenge", "adventure", "dangerous", "irregular", "pollution", "president", "undefined", "pineapple", "wrestling",
+"congruent", "community", "structure", "invisible", "packaging", "crocodile", "begining", "integrity", "everybody", "attention", "lightning", "chemistry", "agreement", "architect",
+"deception", "generator", "perimeter", "radiation", "direction", "moustache", "hurricane", "scorching", "scientist", "astronaut", "legendary", "brilliant", "dedicated" };
 
 int gameModule() {
     // Initialization
     letterData.incorrectLetters = 0;
+    memset(&letterData, 0, sizeof(letterData));
+    fflush(stdin);
+    fflush(stdout); 
+    getchar(); 
 
     // Get word to guess
     getAnswer();
@@ -75,6 +79,7 @@ int getAnswer() {
 
     // Initialize correctLetters
     int ansLength = strlen(letterData.letters);
+
     for (int j = 0; j < ansLength; ++j) {
         letterData.correctLetters[j] = '_';
     }

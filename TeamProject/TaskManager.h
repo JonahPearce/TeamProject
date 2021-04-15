@@ -1,21 +1,9 @@
-#pragma once
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
-struct TaskManager
+struct Task
 {
-	char* description;
+	char description[100];
 	bool active;
 };
-
-struct TaskManager initialize();
-
-void displayTask(struct TaskManager* Item);
-
-void displayAll(struct TaskManager* Item);
-
-void addNewUpdate(struct TaskManager* list);
-
-void removeFromList(struct TaskManager* list);
-
-void searchTask(struct TaskManager* list);
