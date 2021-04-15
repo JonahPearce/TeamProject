@@ -199,10 +199,12 @@ int taskMenu()
 
 			break;
 		case'g':
+			
 			printf("Still implementing, please come back later\n");
 			break;
 
 		case'h':
+			
 			printf("Still implementing, please come back later\n");
 			break;
 
