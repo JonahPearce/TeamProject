@@ -11,8 +11,8 @@ int compareAns();
 void showGuesses();
 
 //Declare Mock Functions For Testing 
-// char mock_getLetter(char* TESTguessed_Letter);
-
+char mock_getLetter(char* TESTguessed_Letter);
+int mockPlayCompareAns(char* incorrectMockLetters, char* mockKeyword);
 
 
 // Data for a keyword and guesses 

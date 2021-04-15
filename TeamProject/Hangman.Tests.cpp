@@ -30,45 +30,78 @@ char mock_getLetter(char* TESTguessed_Letter) {
 
 
 // Mock play() function
-int mockPlayCompareAns(int guessedLetters) {
+int mockPlayCompareAns(char* incorrectMockLetters, char* mockKeyword) {
+
+	// Initialization
+	letterData.incorrectLetters = 0;
+	memset(&letterData, 0, sizeof(letterData));
+
 
 	// Copy guessedLetters into letterdata
-	letterData.incorrectLetters = guessedLetters;
+	strncpy(letterData.unconfirmedLetter, incorrectMockLetters,
+		strlen(incorrectMockLetters));
+
+	// Copy keyword to letterdata 
+	strncpy(letterData.letters, mockKeyword, strlen(mockKeyword));
+
+	int ansLength = strlen(letterData.letters); // Length of keyword
+
+	char guessedLetter = letterData.unconfirmedLetter[0];
+
+	bool matchFound = false;
+
+	// Compare all letters in answer to the letter in guessed letters 
+	// If incorrect, add 1 to .incorrectLetters
+	for (int y = 0; y < ansLength; y++) {
+		if (guessedLetter != letterData.letters[y]) {
+			letterData.incorrectLetters++;
+		}
+	}
 
 	// Variable determines exit status 
 	int gameOver = 0;
 
-	// While !gameOver, loop through displaying guesses/dashes, and getting the letter
-	while (!gameOver) {
-		// Determine if the word has been guessed 
-		gameOver = compareAns();
-		// If the player has guessed the word, display winning message 
-		if (gameOver == 1) {
-			puts("You win!");
-		}
-		else if (gameOver == 2) {
-			puts("You lose!");
-		}
-	}
-
 	int MAXATTEMPTS = 5;
 
-	// Check to see if we lost
-	if (letterData.incorrectLetters > MAXATTEMPTS)
-	{
-		return 2;
+	// Did we get a match?
+	if (!matchFound) {
+		letterData.incorrectLetters++;
+
+		// Check to see if we lost
+		if (letterData.incorrectLetters > MAXATTEMPTS)
+		{
+			return 2;
+		}
 	}
-
-	// Check to see if we won
-	if (strcmp(letterData.letters, letterData.correctLetters) == 0)
-	{
-		return 1;
-	}
-
-	return 0;
-
 }
 
+
+// Mock Menu Function
+int mockMenu(char selection) {
+
+	switch (selection)
+	{
+	case 'a':
+		return 1;
+		break;
+	case 'b':
+		return 2;
+		break;
+	case 'c':
+		return 3;
+		break;
+	case 'd':
+		return 4;
+		break;
+	case 'q':
+		return 5;
+		break;
+	default:
+		return 6;
+		break; 
+	}
+	return 0; 
+}
 
 
 namespace HangmanGameTests
@@ -91,13 +124,26 @@ namespace HangmanGameTests
 			Assert::AreEqual('x', returned_letter);
 		}
 
-		TEST_METHOD(T002_HG_REQ_PROG_002_Shutdown)
+		TEST_METHOD(T002_HG_REQ_PROG_001_Startup)
 		{
-			//Arrange
-			int guessedLetters = 6;
+			//Arrange 
+			char mockSelection = 'd'; 
 
 			//Act
-			int returnedValue = mockPlayCompareAns(guessedLetters);
+			int returnValue = mockMenu(mockSelection);
+
+			//Assert 
+			Assert::AreEqual(4, returnValue); 
+		}
+
+		TEST_METHOD(T003_HG_REQ_PROG_002_Shutdown)
+		{
+			//Arrange
+			char guessedLetters[MAXINPUT] = { '!', '!', '!', '!', '!', '!' };
+			char mockKeyword[MAXINPUT] = { "identical" };
+
+			//Act
+			int returnedValue = mockPlayCompareAns(guessedLetters, mockKeyword);
 
 			//Assert 
 			// A return value of 2 indicates a loss 
