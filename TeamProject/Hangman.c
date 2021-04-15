@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-
 #include "Hangman.h"
 
 
@@ -19,9 +18,9 @@ int gameModule() {
     // Initialization
     letterData.incorrectLetters = 0;
     memset(&letterData, 0, sizeof(letterData));
-    fflush(stdin);
-    fflush(stdout); 
-    getchar(); 
+    fflush(stdin); // Flush input 
+    fflush(stdout); // Fluch output 
+    getchar(); // Absorb the newline from the menu 
 
     // Get word to guess
     getAnswer();
@@ -104,8 +103,6 @@ int compareAns() {
 
     bool matchFound = false;
 
-    // TODO: make sure they entered a letter
-
     // Identify correct letters and move to guessedLetters.correctLetters  
     // Compare all letters in answer to the letter in guessed letters 
     for (int y = 0; y < ansLength; y++) {
@@ -152,7 +149,6 @@ void displayWin() {
     puts("You win!");
     // Display the keyword 
     printf("\nThe word was %s.\n\n", answerWord.wordToGuess);
-    main();
 }
 
 void displayLoss() {
@@ -160,5 +156,4 @@ void displayLoss() {
     puts("You lose!");
     // Display the keyword 
     printf("\nThe word was %s.\n\n", answerWord.wordToGuess);
-    main();
 }
