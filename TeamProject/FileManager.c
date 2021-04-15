@@ -9,6 +9,7 @@
 
 #include "FileManager.h"
 #include "ScheduleManager.h"
+#include "TaskManager.h"
 
 struct dirent* FolderPointer;
 
@@ -382,27 +383,24 @@ void ScheduleManagerSave(SCHEDULE SaveData) {
 
 	printf("\nSaving Schedule Manager Data: \n");
 
-	printf("%d", SaveData->CurrentDate.Year);
 	char* Input = InputName();
-	//printf("Past it");
 	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
 	strcpy(File, IntegrationFolderAddress);
 	strcat(File, Input);
 	strcat(File, ".txt");
-	//FixInput();
 
 	if ((FilePointer = fopen(File, "wb")) != NULL)
 	{
-		printf("Write It ");
 		for (int i = 0; i < MAX_YEARS; i++) {
 			Year Temp = SaveData->Year[i];
 			fwrite(&Temp, sizeof(Year), 1, FilePointer);
 		}
 		fclose(FilePointer);
-	} else {
+	}
+	else {
 		printf("Failed");
 	}
-	
+
 }
 
 void ScheduleManagerLoad(SCHEDULE Scheduler) {
@@ -410,7 +408,7 @@ void ScheduleManagerLoad(SCHEDULE Scheduler) {
 	FileManager(true);
 	printf("\nPreparing to open file Schedule Manager Data: \n");
 	char* Input = InputName();
-	
+
 	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
 	strcpy(File, IntegrationFolderAddress);
 	strcat(File, Input);
@@ -423,7 +421,57 @@ void ScheduleManagerLoad(SCHEDULE Scheduler) {
 			Scheduler->Year[i] = Temp;
 		}
 		fclose(FilePointer);
-	} else {
+	}
+	else {
 		printf("Failed");
 	}
+}
+
+void TaskManagerSave(struct CompiledTasks SaveData) {
+	FILE* FilePointer;
+	FileManager(true);
+
+	printf("\nSaving Schedule Manager Data: \n");
+
+	char* Input = InputName();
+	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
+	strcpy(File, IntegrationFolderAddress);
+	strcat(File, Input);
+	strcat(File, ".txt");
+
+	if ((FilePointer = fopen(File, "wb")) != NULL)
+	{
+		struct CompiledTasks Temp = SaveData;
+		fwrite(&Temp, sizeof(struct CompiledTasks), 1, FilePointer);
+		fclose(FilePointer);
+	}
+	else {
+		printf("Failed");
+	}
+
+}
+
+struct CompiledTasks TaskManagerLoad() {
+	FILE* FilePointer;
+	FileManager(true);
+	printf("\nPreparing to open file Schedule Manager Data: \n");
+	char* Input = InputName();
+
+	char* File = (char*)malloc(1 + strlen(IntegrationFolderAddress) + strlen(Input) + 4);
+	strcpy(File, IntegrationFolderAddress);
+	strcat(File, Input);
+	strcat(File, ".txt");
+
+	struct CompiledTasks Temp;
+
+	if ((FilePointer = fopen(File, "rb")) != NULL) {
+		struct CompiledTasks Temp2;
+		fread(&Temp2, sizeof(struct CompiledTasks), 1, FilePointer);
+		Temp = Temp2;
+		fclose(FilePointer);
+	}
+	else {
+		printf("Failed");
+	}
+	return Temp;
 }

@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "taskManager.h"
+#include "FileManager.h"
 
 int taskMenu()
 {
@@ -9,6 +10,7 @@ int taskMenu()
 	int IDNum;
 	char searchWord[20];
 	struct Task list[10];
+	struct CompiledTasks TempList;
 
 	bool complete = false;
 
@@ -199,13 +201,18 @@ int taskMenu()
 
 			break;
 		case'g':
-			
 
+			for (int i = 0; i < 10; i++) {
+				TempList.Tasks[i] = list[i];
+			}
+			TaskManagerSave(TempList);
 			break;
 
 		case'h':
-			
-
+			TempList = TaskManagerLoad();
+			for (int i = 0; i < 10; i++) {
+				list[i] = TempList.Tasks[i];
+			}
 			break;
 
 		case 'q':
